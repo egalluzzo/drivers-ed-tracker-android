@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Drivers Ed Tracker</string>
+
+
+    <string name="title_timer">Timer</string>
+    <string name="title_progress">Progress</string>
+    <string name="title_driving_log">Driving Log</string>
+
+    <string name="hello_world">Hello world!</string>
+
+    <string name="action_settings">Settings</string>
+</resources>
