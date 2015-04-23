@@ -1,8 +1,15 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+    <style name="AppTheme" parent="android:Theme.Holo">
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="ElapsedTimeTextAppearance" parent="@android:style/TextAppearance">
+        <item name="android:textSize">80sp</item>
+    </style>
+
+    <style name="TimerButton" parent="@android:style/Widget.Holo.Button.Borderless">
     </style>
 
 </resources>

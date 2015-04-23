@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ElapsedTimeTextAppearance" parent="@android:style/TextAppearance.Inverse">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">80sp</item>
+    </style>
+</resources>
