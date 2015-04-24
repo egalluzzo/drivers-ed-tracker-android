@@ -151,7 +151,7 @@ public class MainActivity
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return TimerFragment.newInstance();
+                    return TimerFragment.newInstance(mTrackerData);
                 case 2:
                     return DrivingLogFragment.newInstance();
                 default:

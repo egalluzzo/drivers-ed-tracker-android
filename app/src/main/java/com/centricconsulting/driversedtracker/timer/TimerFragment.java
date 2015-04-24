@@ -37,17 +37,11 @@ public class TimerFragment extends Fragment {
     private Button mSaveButton;
 
     private Handler mTimerHandler = new Handler();
-    //private boolean mRunning;
-    //private long mStartMillis;
-    //private int mElapsedTimeInSeconds;
-
     private TrackerData mTrackerData;
 
     private Runnable mTicker = new Runnable() {
         public void run() {
-            //if (mRunning) {
             if (mTrackerData.getIsTrackerRunning()) {
-                //mElapsedTimeInSeconds = (int)((System.currentTimeMillis() - mStartMillis) / 1000);
                 updateElapsedTime();
                 mTimerHandler.postDelayed(this, TICK_DELAY_IN_MS);
             }
@@ -59,9 +53,10 @@ public class TimerFragment extends Fragment {
      * this fragment using the provided parameters.
      */
     // TODO: Rename and change types and number of parameters
-    public static TimerFragment newInstance() {
+    public static TimerFragment newInstance(TrackerData td) {
         TimerFragment fragment = new TimerFragment();
         fragment.setArguments(new Bundle());
+        fragment.mTrackerData = td;
         return fragment;
     }
 
@@ -82,7 +77,6 @@ public class TimerFragment extends Fragment {
         mStartStopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //if (mRunning) {
                 if (mTrackerData.getIsTrackerRunning()) {
                     stopTimer();
                 } else {
@@ -107,17 +101,9 @@ public class TimerFragment extends Fragment {
             }
         });
 
-        Bundle arguments = getArguments();
-        //if (arguments != null) {
-        //    mRunning = arguments.getBoolean("mRunning", false);
-        //    mStartMillis = arguments.getLong("mStartMillis", 0);
-        //    mElapsedTimeInSeconds = arguments.getInt("mElapsedTimeInSeconds", 0);
-        //}
-
         updateElapsedTime();
         updateButtonStates();
 
-        //if (mRunning) {
         if (mTrackerData.getIsTrackerRunning()) {
             mTimerHandler.postDelayed(mTicker, TICK_DELAY_IN_MS);
         }
@@ -125,26 +111,13 @@ public class TimerFragment extends Fragment {
         return rootView;
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        Bundle arguments = getArguments();
-        //arguments.putBoolean("mRunning", mRunning);
-        //arguments.putLong("mStartMillis", mStartMillis);
-        //arguments.putInt("mElapsedTimeInSeconds", mElapsedTimeInSeconds);
-    }
-
     public void startTimer() {
-        //mRunning = true;
-        //mStartMillis = System.currentTimeMillis();
         mTrackerData.startTracker();
         mTimerHandler.postDelayed(mTicker, TICK_DELAY_IN_MS);
         updateButtonStates();
     }
 
     public void stopTimer() {
-        //mRunning = false;
         mTrackerData.stopTracker();
         mTimerHandler.removeCallbacks(mTicker);
         updateButtonStates();
@@ -152,7 +125,6 @@ public class TimerFragment extends Fragment {
 
     public void resetTimer() {
         stopTimer();
-        //mElapsedTimeInSeconds = 0;
         mTrackerData.clearTracker();
         updateElapsedTime();
         updateButtonStates();
@@ -160,8 +132,6 @@ public class TimerFragment extends Fragment {
 
     public void saveDrive() {
         Drive drive = new Drive();
-        //drive.setStartTime(new Date(mStartMillis));
-        //drive.setElapsedTimeInSeconds(mElapsedTimeInSeconds);
         drive.setStartTime(new Date(mTrackerData.getTrackerStartTime()));
         drive.setElapsedTimeInSeconds(mTrackerData.getTrackerElapsedTime());
         if (mListener != null) {
@@ -174,11 +144,6 @@ public class TimerFragment extends Fragment {
     }
 
     private void updateButtonStates() {
-        //mStartStopButton.setText(getResources().getText(mRunning ? R.string.timer_stop_button_text : R.string.timer_start_button_text));
-        //mStartStopButton.setEnabled(mRunning || mElapsedTimeInSeconds == 0);
-        //mResetButton.setEnabled(mRunning || mElapsedTimeInSeconds > 0);
-        //mSaveButton.setEnabled(!mRunning && mElapsedTimeInSeconds > 0);
-
         mStartStopButton.setText(getResources().getText(mTrackerData.getIsTrackerRunning() ? R.string.timer_stop_button_text : R.string.timer_start_button_text));
         mStartStopButton.setEnabled(mTrackerData.getIsTrackerRunning() || mTrackerData.getTrackerElapsedTime() == 0);
         mResetButton.setEnabled(mTrackerData.getIsTrackerRunning() || mTrackerData.getTrackerElapsedTime() > 0);
@@ -202,8 +167,6 @@ public class TimerFragment extends Fragment {
         super.onAttach(activity);
         try {
             mListener = (Listener) activity;
-            MainActivity main = (MainActivity)getActivity();
-            mTrackerData = (TrackerData) main.mTrackerData;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
