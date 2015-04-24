@@ -57,6 +57,7 @@ public class MainActivity
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setOffscreenPageLimit(3);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         // When swiping between different sections, select the corresponding
@@ -125,7 +126,6 @@ public class MainActivity
     @Override
     public void onSaveDrive(Drive drive) {
         InMemoryDriveRepository.getInstance().save(drive);
-        ((DrivingLogFragment)mSectionsPagerAdapter.getItem(2)).refresh();
         Toast toast = Toast.makeText(this, "Saved drive (well, not really)", Toast.LENGTH_SHORT);
         toast.show();
     }
