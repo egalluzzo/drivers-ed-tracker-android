@@ -55,7 +55,9 @@ public class TimerFragment extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static TimerFragment newInstance() {
-        return new TimerFragment();
+        TimerFragment fragment = new TimerFragment();
+        fragment.setArguments(new Bundle());
+        return fragment;
     }
 
     /**
@@ -70,7 +72,18 @@ public class TimerFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_timer, container, false);
 
         mElapsedTimeView = (TextView)rootView.findViewById(R.id.timer_elapsed_time_text);
+
         mStartStopButton = (Button)rootView.findViewById(R.id.timer_start_button);
+        mStartStopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mRunning) {
+                    stopTimer();
+                } else {
+                    startTimer();
+                }
+            }
+        });
 
         mResetButton = (Button)rootView.findViewById(R.id.timer_reset_button);
         mResetButton.setOnClickListener(new View.OnClickListener() {
@@ -88,54 +101,43 @@ public class TimerFragment extends Fragment {
             }
         });
 
-        if (savedInstanceState != null) {
-            mRunning = savedInstanceState.getBoolean("mRunning", false);
-            mStartMillis = savedInstanceState.getLong("mStartMillis", 0);
-            mElapsedTimeInSeconds = savedInstanceState.getInt("mElapsedTimeInSeconds", 0);
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            mRunning = arguments.getBoolean("mRunning", false);
+            mStartMillis = arguments.getLong("mStartMillis", 0);
+            mElapsedTimeInSeconds = arguments.getInt("mElapsedTimeInSeconds", 0);
         }
 
         updateElapsedTime();
-        resetTimer();
+        updateButtonStates();
+
+        if (mRunning) {
+            mTimerHandler.postDelayed(mTicker, TICK_DELAY_IN_MS);
+        }
 
         return rootView;
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putBoolean("mRunning", mRunning);
-        outState.putLong("mStartMillis", mStartMillis);
-        outState.putInt("mElapsedTimeInSeconds", mElapsedTimeInSeconds);
+    public void onPause() {
+        super.onPause();
+
+        Bundle arguments = getArguments();
+        arguments.putBoolean("mRunning", mRunning);
+        arguments.putLong("mStartMillis", mStartMillis);
+        arguments.putInt("mElapsedTimeInSeconds", mElapsedTimeInSeconds);
     }
 
     public void startTimer() {
         mRunning = true;
         mStartMillis = System.currentTimeMillis();
         mTimerHandler.postDelayed(mTicker, TICK_DELAY_IN_MS);
-
-        mStartStopButton.setText(getResources().getText(R.string.timer_stop_button_text));
-        mStartStopButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                stopTimer();
-            }
-        });
-
         updateButtonStates();
     }
 
     public void stopTimer() {
         mRunning = false;
         mTimerHandler.removeCallbacks(mTicker);
-
-        mStartStopButton.setText(getResources().getText(R.string.timer_start_button_text));
-        mStartStopButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startTimer();
-            }
-        });
-
         updateButtonStates();
     }
 
