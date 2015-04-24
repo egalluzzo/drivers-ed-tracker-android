@@ -19,10 +19,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.centricconsulting.driversedtracker.drivinglog.DrivingLogFragment;
+import com.centricconsulting.driversedtracker.model.Drive;
+import com.centricconsulting.driversedtracker.repository.memory.InMemoryDriveRepository;
 import com.centricconsulting.driversedtracker.timer.TimerFragment;
 
 
-public class MainActivity extends Activity implements ActionBar.TabListener, TimerFragment.Listener {
+public class MainActivity
+        extends Activity
+        implements ActionBar.TabListener, TimerFragment.Listener, DrivingLogFragment.Listener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -118,14 +123,23 @@ public class MainActivity extends Activity implements ActionBar.TabListener, Tim
     }
 
     @Override
-    public void onSaveDrive() {
+    public void onSaveDrive(Drive drive) {
+        InMemoryDriveRepository.getInstance().save(drive);
+        ((DrivingLogFragment)mSectionsPagerAdapter.getItem(2)).refresh();
         Toast toast = Toast.makeText(this, "Saved drive (well, not really)", Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+    @Override
+    public void onDriveTap(Drive drive) {
+        // FIXME: Implement this
     }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
+     *
+     * FIXME: This class needs to die.  Switch statements are evil (usually).
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
@@ -138,6 +152,8 @@ public class MainActivity extends Activity implements ActionBar.TabListener, Tim
             switch (position) {
                 case 0:
                     return TimerFragment.newInstance();
+                case 2:
+                    return DrivingLogFragment.newInstance();
                 default:
                     return PlaceholderFragment.newInstance(position + 1);
             }

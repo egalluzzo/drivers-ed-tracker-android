@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.centricconsulting.driversedtracker.R;
+import com.centricconsulting.driversedtracker.model.Drive;
+
+import java.util.Date;
 
 /**
  * A {@link Fragment} representing the Timer screen.
@@ -67,14 +70,7 @@ public class TimerFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_timer, container, false);
 
         mElapsedTimeView = (TextView)rootView.findViewById(R.id.timer_elapsed_time_text);
-
         mStartStopButton = (Button)rootView.findViewById(R.id.timer_start_button);
-        mStartStopButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startTimer();
-            }
-        });
 
         mResetButton = (Button)rootView.findViewById(R.id.timer_reset_button);
         mResetButton.setOnClickListener(new View.OnClickListener() {
@@ -88,15 +84,18 @@ public class TimerFragment extends Fragment {
         mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mListener != null) {
-                    mListener.onSaveDrive();
-                }
+                saveDrive();
             }
         });
 
-        mElapsedTimeInSeconds = 0;
+        if (savedInstanceState != null) {
+            mRunning = savedInstanceState.getBoolean("mRunning", false);
+            mStartMillis = savedInstanceState.getLong("mStartMillis", 0);
+            mElapsedTimeInSeconds = savedInstanceState.getInt("mElapsedTimeInSeconds", 0);
+        }
+
         updateElapsedTime();
-        updateButtonStates();
+        resetTimer();
 
         return rootView;
     }
@@ -107,17 +106,6 @@ public class TimerFragment extends Fragment {
         outState.putBoolean("mRunning", mRunning);
         outState.putLong("mStartMillis", mStartMillis);
         outState.putInt("mElapsedTimeInSeconds", mElapsedTimeInSeconds);
-    }
-
-    @Override
-    public void onViewStateRestored(Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        mRunning = savedInstanceState.getBoolean("mRunning");
-        mStartMillis = savedInstanceState.getLong("mStartMillis");
-        mElapsedTimeInSeconds = savedInstanceState.getInt("mElapsedTimeInSeconds");
-
-        updateElapsedTime();
-        updateButtonStates();
     }
 
     public void startTimer() {
@@ -156,6 +144,15 @@ public class TimerFragment extends Fragment {
         mElapsedTimeInSeconds = 0;
         updateElapsedTime();
         updateButtonStates();
+    }
+
+    public void saveDrive() {
+        Drive drive = new Drive();
+        drive.setStartTime(new Date(mStartMillis));
+        drive.setElapsedTimeInSeconds(mElapsedTimeInSeconds);
+        if (mListener != null) {
+            mListener.onSaveDrive(drive);
+        }
     }
 
     private void updateElapsedTime() {
@@ -208,6 +205,6 @@ public class TimerFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface Listener {
-        public void onSaveDrive();
+        public void onSaveDrive(Drive drive);
     }
 }
