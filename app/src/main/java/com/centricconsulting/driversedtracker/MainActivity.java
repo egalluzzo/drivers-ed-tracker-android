@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.centricconsulting.driversedtracker.drivinglog.DrivingLogFragment;
 import com.centricconsulting.driversedtracker.model.Drive;
+import com.centricconsulting.driversedtracker.model.TrackerData;
 import com.centricconsulting.driversedtracker.repository.memory.InMemoryDriveRepository;
 import com.centricconsulting.driversedtracker.timer.TimerFragment;
 
@@ -34,6 +35,7 @@ public class MainActivity
      * fragments for each of the sections.
      */
     SectionsPagerAdapter mSectionsPagerAdapter;
+    public TrackerData mTrackerData;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -78,6 +80,8 @@ public class MainActivity
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
+
+        mTrackerData = new TrackerData();
     }
 
 
