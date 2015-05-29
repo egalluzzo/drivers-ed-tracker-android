@@ -24,6 +24,8 @@ import android.widget.Toast;
 import com.centricconsulting.driversedtracker.drivinglog.DrivingLogFragment;
 import com.centricconsulting.driversedtracker.model.Drive;
 import com.centricconsulting.driversedtracker.model.TrackerData;
+import com.centricconsulting.driversedtracker.repository.DriveRepository;
+import com.centricconsulting.driversedtracker.repository.db.DbDriveRepository;
 import com.centricconsulting.driversedtracker.repository.memory.InMemoryDriveRepository;
 import com.centricconsulting.driversedtracker.timer.TimerFragment;
 
@@ -36,8 +38,9 @@ public class MainActivity
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections.
      */
-    SectionsPagerAdapter mSectionsPagerAdapter;
-    public TrackerData mTrackerData;
+    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private TrackerData mTrackerData;
+    private DriveRepository mDriveRepository;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -48,6 +51,8 @@ public class MainActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mDriveRepository = new DbDriveRepository(getApplicationContext());
 
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
@@ -127,7 +132,7 @@ public class MainActivity
 
     @Override
     public void onSaveDrive(Drive drive) {
-        InMemoryDriveRepository.getInstance().save(drive);
+        mDriveRepository.save(drive);
         Toast toast = Toast.makeText(this, "Saved drive (well, not really)", Toast.LENGTH_SHORT);
         toast.show();
 
@@ -161,7 +166,7 @@ public class MainActivity
                 case 0:
                     return TimerFragment.newInstance(mTrackerData);
                 case 2:
-                    return DrivingLogFragment.newInstance();
+                    return DrivingLogFragment.newInstance(mDriveRepository);
                 default:
                     return PlaceholderFragment.newInstance(position + 1);
             }

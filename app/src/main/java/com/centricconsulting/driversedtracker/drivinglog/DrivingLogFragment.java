@@ -41,10 +41,12 @@ public class DrivingLogFragment extends Fragment implements AbsListView.OnItemCl
      */
     private ListAdapter mAdapter;
 
-    private DriveRepository mDriveRepository = InMemoryDriveRepository.getInstance();
+    private DriveRepository mDriveRepository;
 
-    public static DrivingLogFragment newInstance() {
-        return new DrivingLogFragment();
+    public static DrivingLogFragment newInstance(DriveRepository driveRepository) {
+        DrivingLogFragment fragment = new DrivingLogFragment();
+        fragment.mDriveRepository = driveRepository;
+        return fragment;
     }
 
     /**
