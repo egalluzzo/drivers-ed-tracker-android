@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/pref_target_hours_title"
+        android:key="pref_target_hours">
+        <EditTextPreference
+            android:key="pref_key_total_hours"
+            android:title="@string/pref_total_hours_title"
+            android:summary="@string/pref_total_hours_summary"
+            android:defaultValue="50"
+            android:numeric="integer"/>
+        <EditTextPreference
+            android:key="pref_key_daytime_hours"
+            android:title="@string/pref_daytime_hours_title"
+            android:summary="@string/pref_daytime_hours_summary"
+            android:defaultValue="40"
+            android:numeric="integer"/>
+        <EditTextPreference
+            android:key="pref_key_nighttime_hours"
+            android:title="@string/pref_nighttime_hours_title"
+            android:summary="@string/pref_nighttime_hours_summary"
+            android:defaultValue="10"
+            android:numeric="integer"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_daylight_settings_title"
+        android:key="pref_daylight_hours">
+        <!--<EditTextPreference-->
+            <!--android:key="pref_key_sunrise"-->
+            <!--android:title="@string/pref_sunrise_title"-->
+            <!--android:summary="@string/pref_sunrise_summary"-->
+            <!--android:defaultValue="50"-->
+            <!--android:numeric="integer"/>-->
+        <!--<EditTextPreference-->
+            <!--android:key="pref_key_daytime_hours"-->
+            <!--android:title="@string/pref_sunset_title"-->
+            <!--android:summary="@string/pref_sunset_summary"-->
+            <!--android:defaultValue="40"-->
+            <!--android:numeric="integer"/>-->
+    </PreferenceCategory>
+</PreferenceScreen>
