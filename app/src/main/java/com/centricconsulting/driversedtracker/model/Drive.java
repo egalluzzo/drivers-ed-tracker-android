@@ -11,6 +11,7 @@ public class Drive {
     private long mId;
     private Date mStartTime;
     private int mElapsedTimeInSeconds;
+    private DayNight mDayNight = DayNight.UNKNOWN;
 
     public long getId() {
         return mId;
@@ -34,6 +35,14 @@ public class Drive {
 
     public void setElapsedTimeInSeconds(int elapsedTimeInSeconds) {
         mElapsedTimeInSeconds = elapsedTimeInSeconds;
+    }
+
+    public DayNight getDayNight() {
+        return mDayNight;
+    }
+
+    public void setDayNight(DayNight dayNight) {
+        mDayNight = dayNight;
     }
 
     public String toString() {
