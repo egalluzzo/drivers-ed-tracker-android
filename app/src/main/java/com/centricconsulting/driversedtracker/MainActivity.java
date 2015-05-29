@@ -1,6 +1,8 @@
 package com.centricconsulting.driversedtracker;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import android.app.Activity;
 import android.app.ActionBar;
@@ -128,6 +130,11 @@ public class MainActivity
         InMemoryDriveRepository.getInstance().save(drive);
         Toast toast = Toast.makeText(this, "Saved drive (well, not really)", Toast.LENGTH_SHORT);
         toast.show();
+
+        DrivingLogFragment drivingLogFragment = (DrivingLogFragment) mSectionsPagerAdapter.getRegisteredFragment(2);
+        if (drivingLogFragment != null) {
+            drivingLogFragment.refresh();
+        }
     }
 
     @Override
@@ -142,6 +149,7 @@ public class MainActivity
      * FIXME: This class needs to die.  Switch statements are evil (usually).
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
+        private Map<Integer, Fragment> mFragmentMap = new HashMap<Integer, Fragment>();
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -177,6 +185,23 @@ public class MainActivity
                     return getString(R.string.title_driving_log).toUpperCase(l);
             }
             return null;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            Fragment fragment = (Fragment) super.instantiateItem(container, position);
+            mFragmentMap.put(position, fragment);
+            return fragment;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            mFragmentMap.remove(position);
+            super.destroyItem(container, position, object);
+        }
+
+        public Fragment getRegisteredFragment(int position) {
+            return mFragmentMap.get(position);
         }
     }
 

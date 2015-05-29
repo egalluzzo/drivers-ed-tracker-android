@@ -66,15 +66,19 @@ public class DrivingLogFragment extends Fragment implements AbsListView.OnItemCl
 
         // Set the adapter
         mListView = (AbsListView) view.findViewById(android.R.id.list);
-        mAdapter = new ArrayAdapter<Drive>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1,
-                mDriveRepository.findAll());
-        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+        setupAdapter();
 
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
 
         return view;
+    }
+
+    private void setupAdapter() {
+        mAdapter = new ArrayAdapter<Drive>(getActivity(),
+                android.R.layout.simple_list_item_1, android.R.id.text1,
+                mDriveRepository.findAll());
+        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
     }
 
     @Override
@@ -115,6 +119,10 @@ public class DrivingLogFragment extends Fragment implements AbsListView.OnItemCl
         if (emptyView instanceof TextView) {
             ((TextView) emptyView).setText(emptyText);
         }
+    }
+
+    public void refresh() {
+        setupAdapter();
     }
 
     /**
