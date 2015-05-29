@@ -9,6 +9,7 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -27,6 +28,7 @@ import com.centricconsulting.driversedtracker.model.TrackerData;
 import com.centricconsulting.driversedtracker.repository.DriveRepository;
 import com.centricconsulting.driversedtracker.repository.db.DbDriveRepository;
 import com.centricconsulting.driversedtracker.repository.memory.InMemoryDriveRepository;
+import com.centricconsulting.driversedtracker.settings.SettingsActivity;
 import com.centricconsulting.driversedtracker.timer.TimerFragment;
 
 
@@ -109,6 +111,8 @@ public class MainActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
             return true;
         }
 

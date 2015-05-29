@@ -1,18 +1,25 @@
 <resources>
     <string name="app_name">Drivers Ed Tracker</string>
-
+    <string name="action_settings">Settings</string>
 
     <string name="title_timer">Timer</string>
     <string name="title_progress">Progress</string>
     <string name="title_driving_log">Driving Log</string>
+    <string name="title_settings">Settings</string>
 
-    <string name="hello_world">Hello world!</string>
-
-    <string name="action_settings">Settings</string>
     <string name="timer_start_button_text">Start</string>
     <string name="timer_stop_button_text">Stop</string>
     <string name="timer_reset_button_text">Reset</string>
     <string name="timer_save_button_text">Save</string>
+
+    <string name="pref_target_hours_title">Target Hours</string>
+    <string name="pref_total_hours_title">Total Hours</string>
+    <string name="pref_total_hours_summary">The total number of driving hours required by your state</string>
+    <string name="pref_daytime_hours_title">Daytime Hours</string>
+    <string name="pref_daytime_hours_summary">The number of daytime hours required by your state</string>
+    <string name="pref_nighttime_hours_title">Nighttime Hours</string>
+    <string name="pref_nighttime_hours_summary">The number of nighttime hours required by your state</string>
+    <string name="pref_daylight_settings_title">Daylight Settings</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
