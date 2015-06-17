@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.centricconsulting.driversedtracker.drivinglog.DrivingLogFragment;
 import com.centricconsulting.driversedtracker.model.Drive;
 import com.centricconsulting.driversedtracker.model.TrackerData;
+import com.centricconsulting.driversedtracker.progress.ProgressFragment;
 import com.centricconsulting.driversedtracker.repository.DriveRepository;
 import com.centricconsulting.driversedtracker.repository.db.DbDriveRepository;
 import com.centricconsulting.driversedtracker.repository.memory.InMemoryDriveRepository;
@@ -169,6 +170,8 @@ public class MainActivity
             switch (position) {
                 case 0:
                     return TimerFragment.newInstance(mTrackerData);
+                case 1:
+                    return ProgressFragment.newInstance(mDriveRepository);
                 case 2:
                     return DrivingLogFragment.newInstance(mDriveRepository);
                 default:
