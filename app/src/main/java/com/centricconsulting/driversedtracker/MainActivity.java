@@ -138,7 +138,7 @@ public class MainActivity
     @Override
     public void onSaveDrive(Drive drive) {
         mDriveRepository.save(drive);
-        Toast toast = Toast.makeText(this, "Saved drive (well, not really)", Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(this, "Drive has been saved.", Toast.LENGTH_SHORT);
         toast.show();
 
         DrivingLogFragment drivingLogFragment = (DrivingLogFragment) mSectionsPagerAdapter.getRegisteredFragment(2);

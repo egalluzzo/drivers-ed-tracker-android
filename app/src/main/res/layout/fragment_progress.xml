@@ -1,73 +1,59 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:background="@drawable/background_light"
     tools:context=".MainActivity$PlaceholderFragment">
+
+    <TextView
+        android:layout_height="50dp"
+        android:id="@+id/progress_status_text"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="fill_parent"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"/>
+
     <TableLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignTop="@+id/section_label"
-        android:layout_centerInParent="true"
-        android:textAlignment="center">
+        android:layout_height="fill_parent">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <EditText
-                android:layout_height="100dp"
-                android:inputType="textMultiLine"
-                android:ems="10"
-                android:id="@+id/progress_status_text"
-                android:layout_column="0"
-                android:textAlignment="center" />
-        </TableRow>
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="50dp">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/night_progress_image"
-                android:layout_column="0"
-                android:layout_span="1"
-                android:src="@drawable/moon" />
+                android:src="@drawable/moon"
+                android:layout_marginRight="16dp"/>
 
             <ProgressBar
                 style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/night_progressBar"
-                android:layout_column="1"
-                android:layout_span="2" />
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"/>
         </TableRow>
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="50dp" >
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/day_progress_image"
-                android:layout_column="0"
-                android:layout_span="1"
-                android:src="@drawable/sun" />
+                android:src="@drawable/sun"
+                android:layout_marginRight="16dp"/>
 
             <ProgressBar
                 style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/day_progressBar"
-                android:layout_column="1"
-                android:layout_span="2"/>
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"/>
         </TableRow>
 
         <TableRow
@@ -76,20 +62,15 @@
             android:layout_marginTop="50dp" >
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/progress_image"
-                android:layout_column="0"
-                android:layout_span="1"
-                android:src="@drawable/certificate" />
+                android:src="@drawable/certificate"
+                android:layout_marginRight="16dp"/>
 
             <ProgressBar
                 style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/progressBar"
-                android:layout_column="1"
-                android:layout_span="2"/>
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"/>
         </TableRow>
     </TableLayout>
-</RelativeLayout>
+</LinearLayout>

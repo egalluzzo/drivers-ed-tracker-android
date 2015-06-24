@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -14,7 +12,6 @@ import com.centricconsulting.driversedtracker.R;
 import com.centricconsulting.driversedtracker.model.DayNight;
 import com.centricconsulting.driversedtracker.model.Drive;
 import com.centricconsulting.driversedtracker.repository.DriveRepository;
-import com.centricconsulting.driversedtracker.repository.memory.InMemoryDriveRepository;
 
 import java.util.List;
 
@@ -73,7 +70,7 @@ public class ProgressFragment extends Fragment{
 
         //Display Status
         View rootView = inflater.inflate(R.layout.fragment_progress, container, false);
-        EditText statusText = (EditText)rootView.findViewById(R.id.progress_status_text);
+        TextView statusText = (TextView)rootView.findViewById(R.id.progress_status_text);
         statusText.setText(statusMessage);
 
         ProgressBar statusProgressBar = (ProgressBar)rootView.findViewById(R.id.progressBar);
