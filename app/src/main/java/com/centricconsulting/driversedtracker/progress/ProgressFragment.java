@@ -74,13 +74,19 @@ public class ProgressFragment extends Fragment{
         statusText.setText(statusMessage);
 
         ProgressBar statusProgressBar = (ProgressBar)rootView.findViewById(R.id.progressBar);
-        statusProgressBar.setProgress((int)percentTotalComplete);
+        statusProgressBar.setProgress((int) percentTotalComplete);
+        TextView statusProgressText = (TextView)rootView.findViewById(R.id.progress_text);
+        statusProgressText.setText(((dayDriveTime + nightDriveTime)/3600) + " / " + String.format("%.1f", ((requiredDay + requiredNight)/3600)));
 
         ProgressBar nightProgressBar = (ProgressBar)rootView.findViewById(R.id.night_progressBar);
-        nightProgressBar.setProgress((int)percentNightComplete);
+        nightProgressBar.setProgress((int) percentNightComplete);
+        TextView nightProgressText = (TextView)rootView.findViewById(R.id.night_progress_text);
+        nightProgressText.setText((nightDriveTime/3600) + " / " + String.format("%.1f", requiredNight/3600));
 
         ProgressBar dayProgressBar = (ProgressBar)rootView.findViewById(R.id.day_progressBar);
-        dayProgressBar.setProgress((int)percentDayComplete);
+        dayProgressBar.setProgress((int) percentDayComplete);
+        TextView dayProgressText = (TextView)rootView.findViewById(R.id.day_progress_text);
+        dayProgressText.setText((dayDriveTime/3600) + " / " + String.format("%.1f", requiredDay/3600));
 
         return rootView;
     }

@@ -36,7 +36,14 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:id="@+id/night_progressBar"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_marginRight="16dp"/>
+            <TextView
+                android:id="@+id/night_progress_text"
+                android:textSize="20sp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="90dp"
+                android:layout_weight="0" />
         </TableRow>
 
         <TableRow
@@ -53,7 +60,14 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:id="@+id/day_progressBar"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_marginRight="16dp"/>
+            <TextView
+                android:id="@+id/day_progress_text"
+                android:textSize="20sp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="90dp"
+                android:layout_weight="0" />
         </TableRow>
 
         <TableRow
@@ -70,7 +84,14 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:id="@+id/progressBar"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_marginRight="16dp"/>
+            <TextView
+                android:id="@+id/progress_text"
+                android:textSize="20sp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="90dp"
+                android:layout_weight="0" />
         </TableRow>
     </TableLayout>
 </LinearLayout>
