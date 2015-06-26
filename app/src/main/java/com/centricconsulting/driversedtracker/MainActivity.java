@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -37,6 +38,8 @@ import com.centricconsulting.driversedtracker.timer.TimerFragment;
 public class MainActivity
         extends Activity
         implements ActionBar.TabListener, TimerFragment.Listener, DrivingLogFragment.Listener {
+
+    private static final String TAG = MainActivity.class.getName();
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -182,7 +185,8 @@ public class MainActivity
                 case 2:
                     return DrivingLogFragment.newInstance(mDriveRepository);
                 default:
-                    return PlaceholderFragment.newInstance(position + 1);
+                    Log.d(TAG, "No fragment in main view pager at index " + position);
+                    return null;
             }
         }
 
@@ -223,38 +227,4 @@ public class MainActivity
             return mFragmentMap.get(position);
         }
     }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
-    }
-
 }

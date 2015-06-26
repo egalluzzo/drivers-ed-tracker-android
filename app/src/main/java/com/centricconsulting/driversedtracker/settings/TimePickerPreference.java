@@ -7,37 +7,31 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TimePicker;
 
+import com.centricconsulting.driversedtracker.R;
+
 import java.util.Scanner;
 
 /**
  * Created by larry.wildey on 6/26/2015.
  */
-
 public class TimePickerPreference extends DialogPreference {
-    Context context;
-    TimePickerPreference timePickerPreference;
+    private static final String DEFAULT_VALUE = "00:00";
+
     private TimePicker timePicker;
-    private final static String TAG = "TIME_DIALOG_PREFERENCE";
-    private final String DEFAULT_VALUE = "00:00";
-    String key;
 
     public TimePickerPreference (Context context) {
         this(context, null);
-        this.context=context;
     }
 
     public TimePickerPreference (Context context, AttributeSet attrs) {
         this(context, attrs, 0);
-        this.context=context;
     }
 
     public TimePickerPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
-        this.context=context;
-
-        setPositiveButtonText("Set");
-        setNegativeButtonText("Cancel");
+        setPositiveButtonText(getContext().getString(R.string.pref_button_set));
+        setNegativeButtonText(getContext().getString(R.string.button_cancel));
     }
 
     @Override
@@ -46,12 +40,12 @@ public class TimePickerPreference extends DialogPreference {
     }
 
     @Override
-    public View onCreateDialogView(){
+    public View onCreateDialogView() {
         String persistedTime = getPersistedString(DEFAULT_VALUE);
         Scanner scanner = new Scanner(persistedTime).useDelimiter(":");
         int hour = scanner.nextInt();
         int minutes = scanner.nextInt();
-        timePicker =  new TimePicker(context);
+        timePicker =  new TimePicker(getContext());
         timePicker.setIs24HourView(true);
         timePicker.setCurrentHour(hour);
         timePicker.setCurrentMinute(minutes);
@@ -59,6 +53,8 @@ public class TimePickerPreference extends DialogPreference {
     }
 
     public void onDialogClosed(boolean positiveResult) {
-        persistString(String.format("%d:%02d", timePicker.getCurrentHour(), timePicker.getCurrentMinute()));
+        if (positiveResult) {
+            persistString(String.format("%d:%02d", timePicker.getCurrentHour(), timePicker.getCurrentMinute()));
+        }
     }
 }
