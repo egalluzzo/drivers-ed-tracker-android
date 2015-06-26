@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.centricconsulting.driversedtracker.drivinglog.DrivingLogFragment;
+import com.centricconsulting.driversedtracker.model.AppPreferences;
 import com.centricconsulting.driversedtracker.model.Drive;
 import com.centricconsulting.driversedtracker.model.TrackerData;
 import com.centricconsulting.driversedtracker.progress.ProgressFragment;
@@ -44,6 +45,7 @@ public class MainActivity
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private TrackerData mTrackerData;
     private DriveRepository mDriveRepository;
+    private AppPreferences mAppPreferences;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -56,7 +58,7 @@ public class MainActivity
         setContentView(R.layout.activity_main);
 
         mTrackerData = new TrackerData();
-
+        mAppPreferences = AppPreferences.getInstance(getApplicationContext());
         mDriveRepository = new DbDriveRepository(getApplicationContext());
 
         // Set up the action bar.
@@ -141,6 +143,11 @@ public class MainActivity
         Toast toast = Toast.makeText(this, "Drive has been saved.", Toast.LENGTH_SHORT);
         toast.show();
 
+        ProgressFragment progressFragment = (ProgressFragment) mSectionsPagerAdapter.getRegisteredFragment(1);
+        if (progressFragment != null) {
+            progressFragment.refresh();
+        }
+
         DrivingLogFragment drivingLogFragment = (DrivingLogFragment) mSectionsPagerAdapter.getRegisteredFragment(2);
         if (drivingLogFragment != null) {
             drivingLogFragment.refresh();
@@ -171,7 +178,7 @@ public class MainActivity
                 case 0:
                     return TimerFragment.newInstance(mTrackerData);
                 case 1:
-                    return ProgressFragment.newInstance(mDriveRepository);
+                    return ProgressFragment.newInstance(mAppPreferences, mDriveRepository);
                 case 2:
                     return DrivingLogFragment.newInstance(mDriveRepository);
                 default:
