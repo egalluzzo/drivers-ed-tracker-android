@@ -55,6 +55,8 @@ public class MainActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mTrackerData = new TrackerData();
+
         mDriveRepository = new DbDriveRepository(getApplicationContext());
 
         // Set up the action bar.
@@ -91,8 +93,6 @@ public class MainActivity
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
-
-        mTrackerData = new TrackerData();
     }
 
 
