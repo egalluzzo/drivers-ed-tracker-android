@@ -22,4 +22,8 @@
     <string name="pref_nighttime_hours_title">Nighttime Hours</string>
     <string name="pref_nighttime_hours_summary">The number of nighttime hours required by your state</string>
     <string name="pref_daylight_settings_title">Daylight Settings</string>
+    <string name="pref_sunrise_time_summary">When is sunrise</string>
+    <string name="pref_sunrise_time_title">Sunrise</string>
+    <string name="pref_sunset_time_summary">When is sunset</string>
+    <string name="pref_sunset_time_title">Sunset</string>
 </resources>

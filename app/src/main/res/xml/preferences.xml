@@ -24,18 +24,18 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="Sunrise and Sunset Times">
+        android:title="@string/pref_daylight_settings_title">
         <com.centricconsulting.driversedtracker.settings.TimePickerPreference
-            android:defaultValue="08:00"
-            android:key="sunrise_time"
+            android:defaultValue="07:00"
+            android:key="pref_key_sunrise_time"
             android:showDefault="true"
-            android:summary="When is sunrise"
-            android:title="Sunrise" />
+            android:summary="@string/pref_sunrise_time_summary"
+            android:title="@string/pref_sunrise_time_title" />
         <com.centricconsulting.driversedtracker.settings.TimePickerPreference
-            android:defaultValue="20:00"
-            android:key="sunset_time"
+            android:defaultValue="19:00"
+            android:key="pref_key_sunset_time"
             android:showDefault="true"
-            android:summary="When is sunset"
-            android:title="Sunset" />
+            android:summary="@string/pref_sunset_time_summary"
+            android:title="@string/pref_sunset_time_title" />
     </PreferenceCategory>
 </PreferenceScreen>

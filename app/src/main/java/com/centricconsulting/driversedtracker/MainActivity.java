@@ -14,23 +14,18 @@ import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.centricconsulting.driversedtracker.drivinglog.DrivingLogFragment;
 import com.centricconsulting.driversedtracker.model.AppPreferences;
 import com.centricconsulting.driversedtracker.model.Drive;
-import com.centricconsulting.driversedtracker.model.TrackerData;
+import com.centricconsulting.driversedtracker.model.DriveTimer;
 import com.centricconsulting.driversedtracker.progress.ProgressFragment;
 import com.centricconsulting.driversedtracker.repository.DriveRepository;
 import com.centricconsulting.driversedtracker.repository.db.DbDriveRepository;
-import com.centricconsulting.driversedtracker.repository.memory.InMemoryDriveRepository;
 import com.centricconsulting.driversedtracker.settings.SettingsActivity;
 import com.centricconsulting.driversedtracker.timer.TimerFragment;
 
@@ -46,7 +41,7 @@ public class MainActivity
      * fragments for each of the sections.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    private TrackerData mTrackerData;
+    private DriveTimer mDriveTimer;
     private DriveRepository mDriveRepository;
     private AppPreferences mAppPreferences;
 
@@ -60,7 +55,7 @@ public class MainActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTrackerData = new TrackerData();
+        mDriveTimer = new DriveTimer();
         mAppPreferences = AppPreferences.getInstance(getApplicationContext());
         mDriveRepository = new DbDriveRepository(getApplicationContext());
 
@@ -179,7 +174,7 @@ public class MainActivity
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return TimerFragment.newInstance(mTrackerData);
+                    return TimerFragment.newInstance(mDriveTimer, mAppPreferences);
                 case 1:
                     return ProgressFragment.newInstance(mAppPreferences, mDriveRepository);
                 case 2:

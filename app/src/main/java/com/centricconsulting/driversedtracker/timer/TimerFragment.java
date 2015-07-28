@@ -10,12 +10,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.centricconsulting.driversedtracker.MainActivity;
 import com.centricconsulting.driversedtracker.R;
+import com.centricconsulting.driversedtracker.model.AppPreferences;
 import com.centricconsulting.driversedtracker.model.Drive;
-import com.centricconsulting.driversedtracker.model.TrackerData;
+import com.centricconsulting.driversedtracker.model.DriveTimer;
 
-import java.util.Date;
+import java.util.List;
 
 /**
  * A {@link Fragment} representing the Timer screen.
@@ -37,11 +37,12 @@ public class TimerFragment extends Fragment {
     private Button mSaveButton;
 
     private Handler mTimerHandler = new Handler();
-    private TrackerData mTrackerData;
+    private DriveTimer mDriveTimer;
+    private AppPreferences mAppPreferences;
 
     private Runnable mTicker = new Runnable() {
         public void run() {
-            if (mTrackerData.getIsTrackerRunning()) {
+            if (mDriveTimer.isRunning()) {
                 updateElapsedTime();
                 mTimerHandler.postDelayed(this, TICK_DELAY_IN_MS);
             }
@@ -53,15 +54,17 @@ public class TimerFragment extends Fragment {
      * this fragment using the provided parameters.
      */
     // TODO: Rename and change types and number of parameters
-    public static TimerFragment newInstance(TrackerData td) {
+    public static TimerFragment newInstance(DriveTimer td, AppPreferences appPreferences) {
         TimerFragment fragment = new TimerFragment();
         fragment.setArguments(new Bundle());
-        fragment.mTrackerData = td;
+        fragment.mDriveTimer = td;
+        fragment.mAppPreferences = appPreferences;
         return fragment;
     }
 
     /**
-     * Required public default constructor.  Please use {@link #newInstance()} instead.
+     * Required public default constructor.  Please use
+     * {@link #newInstance(DriveTimer, AppPreferences)} instead.
      */
     public TimerFragment() {
     }
@@ -77,7 +80,7 @@ public class TimerFragment extends Fragment {
         mStartStopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mTrackerData.getIsTrackerRunning()) {
+                if (mDriveTimer.isRunning()) {
                     stopTimer();
                 } else {
                     startTimer();
@@ -104,7 +107,7 @@ public class TimerFragment extends Fragment {
         updateElapsedTime();
         updateButtonStates();
 
-        if (mTrackerData.getIsTrackerRunning()) {
+        if (mDriveTimer.isRunning()) {
             mTimerHandler.postDelayed(mTicker, TICK_DELAY_IN_MS);
         }
 
@@ -112,30 +115,30 @@ public class TimerFragment extends Fragment {
     }
 
     public void startTimer() {
-        mTrackerData.startTracker();
+        mDriveTimer.start();
         mTimerHandler.postDelayed(mTicker, TICK_DELAY_IN_MS);
         updateButtonStates();
     }
 
     public void stopTimer() {
-        mTrackerData.stopTracker();
+        mDriveTimer.stop();
         mTimerHandler.removeCallbacks(mTicker);
         updateButtonStates();
     }
 
     public void resetTimer() {
         stopTimer();
-        mTrackerData.clearTracker();
+        mDriveTimer.clear();
         updateElapsedTime();
         updateButtonStates();
     }
 
     public void saveDrive() {
-        Drive drive = new Drive();
-        drive.setStartTime(new Date(mTrackerData.getTrackerStartTime()));
-        drive.setElapsedTimeInSeconds(mTrackerData.getTrackerElapsedTime());
         if (mListener != null) {
-            mListener.onSaveDrive(drive);
+            List<Drive> drives = mDriveTimer.createDrives(mAppPreferences.getDaytimeRange());
+            for (Drive drive : drives) {
+                mListener.onSaveDrive(drive);
+            }
         }
     }
 
@@ -144,14 +147,14 @@ public class TimerFragment extends Fragment {
     }
 
     private void updateButtonStates() {
-        mStartStopButton.setText(getResources().getText(mTrackerData.getIsTrackerRunning() ? R.string.timer_stop_button_text : R.string.timer_start_button_text));
-        mStartStopButton.setEnabled(mTrackerData.getIsTrackerRunning() || mTrackerData.getTrackerElapsedTime() == 0);
-        mResetButton.setEnabled(mTrackerData.getIsTrackerRunning() || mTrackerData.getTrackerElapsedTime() > 0);
-        mSaveButton.setEnabled(!mTrackerData.getIsTrackerRunning() && mTrackerData.getTrackerElapsedTime() > 0);
+        mStartStopButton.setText(getResources().getText(mDriveTimer.isRunning() ? R.string.timer_stop_button_text : R.string.timer_start_button_text));
+        mStartStopButton.setEnabled(mDriveTimer.isRunning() || mDriveTimer.getElapsedTimeInSeconds() == 0);
+        mResetButton.setEnabled(mDriveTimer.isRunning() || mDriveTimer.getElapsedTimeInSeconds() > 0);
+        mSaveButton.setEnabled(!mDriveTimer.isRunning() && mDriveTimer.getElapsedTimeInSeconds() > 0);
     }
 
     private String getFormattedElapsedTime() {
-        int elapsedTimeInSeconds = mTrackerData.getTrackerElapsedTime();
+        int elapsedTimeInSeconds = mDriveTimer.getElapsedTimeInSeconds();
         int hours = elapsedTimeInSeconds / (60 * 60);
         int minutes = (elapsedTimeInSeconds / 60) % 60;
         int seconds = elapsedTimeInSeconds % 60;
@@ -190,6 +193,6 @@ public class TimerFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface Listener {
-        public void onSaveDrive(Drive drive);
+        void onSaveDrive(Drive drive);
     }
 }

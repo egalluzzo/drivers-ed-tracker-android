@@ -56,4 +56,16 @@ public class AppPreferences {
     public int getNighttimeHours() {
         return Integer.parseInt(mSharedPreferences.getString("pref_key_nighttime_hours", "10"));
     }
+
+    public Range<LocalTime> getDaytimeRange() {
+        return new Range<LocalTime>(getSunriseLocalTime(), getSunsetLocalTime());
+    }
+
+    private LocalTime getSunriseLocalTime() {
+        return new LocalTime(mSharedPreferences.getString("pref_key_sunrise_time", "7:00"));
+    }
+
+    private LocalTime getSunsetLocalTime() {
+        return new LocalTime(mSharedPreferences.getString("pref_key_sunset_time", "19:00"));
+    }
 }

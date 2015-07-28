@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TimePicker;
 
 import com.centricconsulting.driversedtracker.R;
+import com.centricconsulting.driversedtracker.model.LocalTime;
 
 import java.util.Scanner;
 
@@ -42,19 +43,17 @@ public class TimePickerPreference extends DialogPreference {
     @Override
     public View onCreateDialogView() {
         String persistedTime = getPersistedString(DEFAULT_VALUE);
-        Scanner scanner = new Scanner(persistedTime).useDelimiter(":");
-        int hour = scanner.nextInt();
-        int minutes = scanner.nextInt();
+        LocalTime time = new LocalTime(persistedTime);
         timePicker =  new TimePicker(getContext());
         timePicker.setIs24HourView(true);
-        timePicker.setCurrentHour(hour);
-        timePicker.setCurrentMinute(minutes);
+        timePicker.setCurrentHour(time.getHours());
+        timePicker.setCurrentMinute(time.getMinutes());
         return timePicker;
     }
 
     public void onDialogClosed(boolean positiveResult) {
         if (positiveResult) {
-            persistString(String.format("%d:%02d", timePicker.getCurrentHour(), timePicker.getCurrentMinute()));
+            persistString(new LocalTime(timePicker.getCurrentHour(), timePicker.getCurrentMinute()).toString());
         }
     }
 }
