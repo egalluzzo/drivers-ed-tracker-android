@@ -26,4 +26,6 @@
     <string name="pref_sunrise_time_title">Sunrise</string>
     <string name="pref_sunset_time_summary">When is sunset</string>
     <string name="pref_sunset_time_title">Sunset</string>
+
+    <string name="credit_background_picture">Background picture by Moyan Brenn on Flickr</string>
 </resources>

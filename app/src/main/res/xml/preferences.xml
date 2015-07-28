@@ -38,4 +38,11 @@
             android:summary="@string/pref_sunset_time_summary"
             android:title="@string/pref_sunset_time_title" />
     </PreferenceCategory>
+
+    <Preference
+        android:key="pref_key_dummy"
+        android:selectable="false"
+        android:persistent="false"
+        android:summary="@string/credit_background_picture"/>
+
 </PreferenceScreen>
