@@ -143,7 +143,7 @@ public class TimerFragment extends Fragment {
     }
 
     private void updateElapsedTime() {
-        mElapsedTimeView.setText(getFormattedElapsedTime());
+        mElapsedTimeView.setText(mDriveTimer.getFormattedElapsedTime());
     }
 
     private void updateButtonStates() {
@@ -151,18 +151,6 @@ public class TimerFragment extends Fragment {
         mStartStopButton.setEnabled(mDriveTimer.isRunning() || mDriveTimer.getElapsedTimeInSeconds() == 0);
         mResetButton.setEnabled(mDriveTimer.isRunning() || mDriveTimer.getElapsedTimeInSeconds() > 0);
         mSaveButton.setEnabled(!mDriveTimer.isRunning() && mDriveTimer.getElapsedTimeInSeconds() > 0);
-    }
-
-    private String getFormattedElapsedTime() {
-        int elapsedTimeInSeconds = mDriveTimer.getElapsedTimeInSeconds();
-        int hours = elapsedTimeInSeconds / (60 * 60);
-        int minutes = (elapsedTimeInSeconds / 60) % 60;
-        int seconds = elapsedTimeInSeconds % 60;
-
-        // Cheap and cheerful, but it works
-        return hours
-                + ":" + (minutes < 10 ? "0" + minutes : minutes)
-                + ":" + (seconds < 10 ? "0" + seconds : seconds);
     }
 
     @Override

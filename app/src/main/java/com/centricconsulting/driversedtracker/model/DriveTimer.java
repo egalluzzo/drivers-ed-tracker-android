@@ -1,5 +1,7 @@
 package com.centricconsulting.driversedtracker.model;
 
+import com.centricconsulting.driversedtracker.timer.TimerFragment;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -100,5 +102,17 @@ public class DriveTimer {
             drive.setDayNight(dayNight);
             drives.add(drive);
         }
+    }
+
+    public String getFormattedElapsedTime() {
+        int elapsedTimeInSeconds = getElapsedTimeInSeconds();
+        int hours = elapsedTimeInSeconds / (60 * 60);
+        int minutes = (elapsedTimeInSeconds / 60) % 60;
+        int seconds = elapsedTimeInSeconds % 60;
+
+        // Cheap and cheerful, but it works
+        return hours
+                + ":" + (minutes < 10 ? "0" + minutes : minutes)
+                + ":" + (seconds < 10 ? "0" + seconds : seconds);
     }
 }

@@ -94,6 +94,22 @@ public class DriveTimerTest {
         assertDrive(drives.get(0), driveTimer.getStartTime(), 2 * 60 * 60, DayNight.NIGHT);
     }
 
+    @Test
+    public void testGetFormattedElapsedTime_AllZeros() {
+        DriveTimer timer = new DriveTimer();
+        timer.setStartTime(stringToDate("07/01/2015 00:00:00"));
+        timer.setEndTime(stringToDate("07/01/2015 00:00:00"));
+        assertEquals("0:00:00", timer.getFormattedElapsedTime());
+    }
+
+    @Test
+    public void testGetFormattedElapsedTime_NoZeros() {
+        DriveTimer timer = new DriveTimer();
+        timer.setStartTime(stringToDate("07/01/2015 00:00:00"));
+        timer.setEndTime(stringToDate("07/01/2015 12:34:56"));
+        assertEquals("12:34:56", timer.getFormattedElapsedTime());
+    }
+
     private void assertDrive(Drive drive, Date trackerStartTime, int elapsedTimeInSeconds, DayNight dayNight) {
         assertEquals(trackerStartTime, drive.getStartTime());
         assertEquals(elapsedTimeInSeconds, drive.getElapsedTimeInSeconds());
