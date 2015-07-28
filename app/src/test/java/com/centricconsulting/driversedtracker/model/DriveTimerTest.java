@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by eric on 7/27/15.
@@ -19,6 +21,25 @@ public class DriveTimerTest {
     @Before
     public void setUp() {
         daylightHours = new Range<LocalTime>(new LocalTime(7, 0), new LocalTime(19, 0));
+    }
+
+    @Test
+    public void testLifecycle() throws InterruptedException {
+        DriveTimer driveTimer = new DriveTimer();
+        assertFalse(driveTimer.isRunning());
+        assertEquals(0, driveTimer.getElapsedTimeInSeconds());
+
+        driveTimer.start();
+
+        Thread.sleep(1100); // Not 1000 due to clock timer resolution
+        assertTrue(driveTimer.isRunning());
+        assertEquals(1, driveTimer.getElapsedTimeInSeconds());
+
+        driveTimer.stop();
+
+        Thread.sleep(1100);
+        assertFalse(driveTimer.isRunning());
+        assertEquals(1, driveTimer.getElapsedTimeInSeconds());
     }
 
     @Test

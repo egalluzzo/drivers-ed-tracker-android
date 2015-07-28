@@ -42,7 +42,7 @@ public class DriveTimer {
     }
 
     public boolean isRunning() {
-        return mEndTime == null;
+        return mStartTime != null && mEndTime == null;
     }
 
     public void start() {
